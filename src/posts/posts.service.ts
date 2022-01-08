@@ -37,7 +37,10 @@ export class PostsService {
               }
        ]
 
-       findAllPosts(): Posts[] {
+       findAllPosts(title?: string): Posts[] {
+              if (title) {
+                     return this.posts.filter(posts => posts.title === title)
+              }
               return this.posts
        }
 
