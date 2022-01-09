@@ -1,4 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger"
+import { MaxLength, MinLength } from "class-validator"
 
 export class CreatePostsDto {
        @ApiProperty()
@@ -8,8 +9,11 @@ export class CreatePostsDto {
        views?: number
 
        @ApiProperty()
+       @MinLength(10)
+       @MaxLength(30)
        title: string
 
        @ApiProperty()
+       @MaxLength(250)
        description: string
 }
