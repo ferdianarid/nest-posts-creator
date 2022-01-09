@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { Logger } from "@nestjs/common"
+import { Logger, ValidationPipe } from "@nestjs/common"
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 require("dotenv/config")
@@ -8,6 +8,8 @@ const PortRunning = process.env.LOCAL_PORT
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
+
+	app.useGlobalPipes(new ValidationPipe())
 
 	const configs = new DocumentBuilder()
 		.setTitle("Nest Posts API")
@@ -18,9 +20,9 @@ async function bootstrap() {
 	const documents = SwaggerModule.createDocument(app, configs)
 	SwaggerModule.setup("/apis", app, documents)
 
-	await app.listen(5000);
+	await app.listen(PortRunning);
 
-	Logger.log(`Server Running on port ${PortRunning}`, "Nest Application")
+	Logger.log(`Server Running on port ${PortRunning}`, "NestApplication")
 }
 
 bootstrap();
